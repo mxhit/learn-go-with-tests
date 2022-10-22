@@ -13,15 +13,31 @@ func Sum(numbers []int) int {
 }
 
 func SumAll(slices ...[]int) []int {
-	// getting number of slices passed in the argument
-	noOfSlices := len(slices)
-	// creating a slice with length = noOfSlices
-	sums := make([]int, noOfSlices)
+	var sums []int
 
 	// iterating over all the slices passed in the argument
-	for i, slice := range slices {
-		// adding the value returned by Sum in the respective index
-		sums[i] = Sum(slice)
+	for _, slice := range slices {
+		// appending the value returned by Sum in sums slice
+		sums = append(sums, Sum(slice))
+	}
+
+	return sums
+}
+
+func SumAllTails(slices ...[]int) []int {
+	var sums []int
+
+	// iterating over all the slices passed in the argument
+	for _, slice := range slices {
+		if len(slice) > 1 {
+			// creating a new slice by excluding the head i.e. 0th index
+			tail := slice[1:]
+			// appending the sum of tail
+			sums = append(sums, Sum(tail))
+		} else {
+			sums = append(sums, 0)
+		}
+
 	}
 
 	return sums
